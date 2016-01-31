@@ -1,0 +1,22 @@
+path /users {
+	read() = true;
+}
+
+path /users/$userId is User {
+	".write": "data.exists() && newData.child('user_id').val() == auth.uid"
+
+}
+
+type User {
+	firstName: String,
+	lastName: String,
+	userName: String
+}
+
+path /games {
+	
+}
+
+path /decks {
+	
+}
