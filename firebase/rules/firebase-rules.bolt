@@ -3,20 +3,78 @@ path /users {
 }
 
 path /users/$userId is User {
-	".write": "data.exists() && newData.child('user_id').val() == auth.uid"
-
+	write() = (doesExist(this) && prior(this).id == auth.uid && this.id == auth.uid) || (doesNotExist(this) && this.id == auth.uid);
+	validate() = this.id == $userId;
 }
 
-type User {
+function doesNotExist(value) {
+	return prior(value) == null;
+}
+
+function doesExist(value) {
+	return prior(value) != null;
+}
+
+type User extends Entity {
 	firstName: String,
 	lastName: String,
-	userName: String
+	userName: String,
+	id: Uid
+}
+
+type Uid extends String {
+	validate() = isUid(this);
+}
+
+//1e2b7288-45f5-4f98-9f81-1ab192245a7b
+
+function isUid(value) {
+	return value.test(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 }
 
 path /games {
-	
+
+}
+
+path /games/$gameId is Game {
+	write() = (doesExist(this) && this.players[auth.uid].userId == auth.uid && prior(this).players[auth.uid].userId == auth.uid || );
+}
+
+type Game {
+}
+
+path /games/$gameId/players/$playerId is Player {
+	write() = (prior(this) != null && prior(this).userId == auth.uid && this.userId == auth.uid) || (prior(this) == null && this.userId == auth.uid);
+}
+
+type Player {
+	playerName: String,
+	playerNum: Number,
+	userId: String
 }
 
 path /decks {
-	
+
+}
+
+path /store {
+	read() = true;
+	write() = ()
+}
+
+path /decks/$deckId is Deck {
+	read() = (Deck.deckOwner.getauth() == auth.uid);
+	write() = (Deck.deckOwner.getauth() == auth.uid);
+}
+
+type Deck {
+	deckName: String,
+	deckOwnerId: String,
+	deckSize: int,
+	deckCards: Card[]
+}
+
+type Entity {
+	createdAt: Number,
+	updatedAt: Number
 }
