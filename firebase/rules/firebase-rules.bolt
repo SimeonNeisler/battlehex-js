@@ -144,12 +144,10 @@ function isCurrentUsersDeck(deckId) {
 
 path /store {
         read() = true;
-        write() = false;
 }
 
 path /store/$storeCardId is storeCard {
         read() = true;
-        write() = false;
 }
 
 type storeCard extends Entity {
@@ -161,9 +159,8 @@ type storeCard extends Entity {
         cardDeployCost: Number
 }
 
-path /decks/$deckId/$userCard is userCard {
-        read() = (this.userId == auth.uid);
-        write() = false;
+path /decks/$userCardId is userCard {
+        read() = doesCurrentUserOwnObject(this);
 }
 
 type userCard {
@@ -191,17 +188,18 @@ path /indexes/userIdToGameIds/$userId/$gameId is ExistingGameId {
 }
 
 
-path /games/$gameId/gameCards {
+path /games/gameCards {
         read() = false;
         write() = false;
 }
 
-path /games/$gameId/gameCards/$gameCardId is GameCard {
-        read() = (this.userId == auth.uid);
+path /games/gameCards/$gameCardId is GameCard {
+        read() = (doesCurrentUserOwnObject(this));
         write() = false;
 }
 
 type GameCard extends Entity {
+        gameId: String,
         userId: String,
         cardId: String,
         cardName: String,
@@ -211,75 +209,75 @@ type GameCard extends Entity {
         cardDeployCost: Number
 }
 
-path /games/$gameId/gameDecks {
-        read() = false;
-        write() = false;
+path /games/gameDecks {
 }
 
-path /games/$gameId/gameDecks/$gameDeck is gameDeck {
-        read() = (this.userId == auth.uid);
-        write() = false;
+path /games/gameDecks/$gameDeck is gameDeck {
+        read() = (doesCurrentUserOwnObject(this));
 }
 
 type gameDeck extends Entity {
         userId: String,
+        gameId: String,
         deckName: String,
         deckSize: Number,
         deckCards: []
 }
 
-path /games/$gameId/hands {
+path /games/hands {
         read() = false;
         write() = false;
 }
 
-path /games/$gameId/hands/$hand is hand{
-        read() = (this.Player.userId == auth.uid);
-        write() = (auth.uid == this.userId && this.userId == this.gameId.info.gameTurnState.userId && this.gameId.info.gameTurnState.TurnComplete == false);
+path /games/hands/$hand is hand{
+        read() = (doesCurrentUserOwnObject(this));
+        write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && !isCurrentGameTurnComplete(this.gameId));
         validate() = (prior(this).numberCards >= this.numberCards && prior(this).numberCards <= this.numberCards + 3);
 }
 
 type hand extends Entity {
+        gameId: String,
         userId: String,
         handSize: Number,
         handContents: []
 }
 
-path /games/$gameId/discardPiles {
+path /games/discardPiles {
         read() = false;
         write() = false;
 }
 
-path /games/$gameId/disardPiles/$discardPile is discardPile {
+path /games/disardPiles/$discardPile is discardPile {
         read() = false;
-        write() = (auth.uid == this.userId && this.userId == this.gameId.info.gameTurnState.userId && this.gameId.info.gameTurnState.TurnComplete == false);
+        write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.userId, this.gameId) && !isCurrentGameTurnComplete(this.gameId));
 }
 
 type discardPile extends Entity {
         userId: String,
-        size: Number,
+        gameId: String,
         contents: []
 }
 
-path /games/$gameId/$map is Map {
-        read() = isCurretUserGamePlayer($gameId);
+path /games/maps/$map is Map {
+        read() = isCurretUserGamePlayer(this.gameId);
 }
 
-path /games/$gameId/$map/tiles {
-        write() = false;
+path /games/maps/$map/tiles {
 }
 
-path/games/$gameId/$map/tiles/$tiles is MapTile {
+path /games/maps/$map/tiles/$tiles is MapTile {
         read() = isCurretUserGamePlayer($gameId);
-        write() == isCurrentUserGamePlayer($gameId);
+        write() == (isCurrentUserGamePlayer(root.games.maps[map].gameId) && isCurrentUsersGameTurn(root.games.maps[map].gameId) && !isCurrentGameTurnComplete(root.games.maps[map].gameId));
         validate() = (prior(this).terrain == this.terrain && prior(this).resource == resource && prior(this).resourceQuantity == this.resourceQuantity);
 }
 
 type Map extends Entity {
+        gameId: String,
         tiles: []
 }
 
 type MapTile extends Entity {
+        tileNum: Number,
         terrain: String,
         resource: String,
         resourceQuantity: Number,
@@ -346,8 +344,8 @@ type TurnComplete extend Boolean {
 }
 
 path /states/games/$gameId/drawPiles/$drawPileId is GameDrawPileState {
-    read() = auth.uid == this.userId;
-    write() = (auth.uid == this.userId && this.userId == this.gameId.info.gameTurnState.userId && this.gameId.info.gameTurnState.TurnComplete == false);
+    read() = doesCurrentUserOwnObject(this);
+    write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && this.gameId.info.gameTurnState.TurnComplete == false);
     validate() = (prior(this).numberCards >= this.numberCards && prior(this).numberCards <= this.numberCards + 3);
 }
 
