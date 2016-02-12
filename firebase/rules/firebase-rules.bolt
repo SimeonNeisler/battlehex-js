@@ -112,14 +112,14 @@ function isUserGamePlayer(gameId, userId) {
 // Decks
 //-------------------------------------------------------------------------------
 
-path /decks/$deckId is Deck {
+path cards/$userCardId/decks{
+}
+
+path cards/$userCardId/decks/$deckId is Deck {
     read() = doesCurrentUserOwnObject(this);
     write() = (doesExist(this) && doesCurrentUserOwnObject(this) && willCurrentUserOwnObject(this)) || (doesNotExist(this) && willCurrentUserOwnObject(this));
 }
 
-path /decks/$deckId/cards/$cardIndex is ExistingCardId {
-    validate() = ($cardIndex >= 0 && $cardIndex < 30);
-}
 
 type Deck extends Entity {
     deckName: String,
@@ -159,7 +159,10 @@ type storeCard extends Entity {
         cardDeployCost: Number
 }
 
-path /decks/$userCardId is userCard {
+path /cards {
+}
+
+path /cards/$userCardId is userCard {
         read() = doesCurrentUserOwnObject(this);
 }
 
@@ -213,7 +216,6 @@ path /games/gameDecks {
 }
 
 path /games/gameDecks/$gameDeck is gameDeck {
-        read() = (doesCurrentUserOwnObject(this));
 }
 
 type gameDeck extends Entity {
@@ -243,12 +245,9 @@ type hand extends Entity {
 }
 
 path /games/discardPiles {
-        read() = false;
-        write() = false;
 }
 
 path /games/disardPiles/$discardPile is discardPile {
-        read() = false;
         write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.userId, this.gameId) && !isCurrentGameTurnComplete(this.gameId));
 }
 
@@ -345,7 +344,7 @@ type TurnComplete extend Boolean {
 
 path /states/games/$gameId/drawPiles/$drawPileId is GameDrawPileState {
     read() = doesCurrentUserOwnObject(this);
-    write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && this.gameId.info.gameTurnState.TurnComplete == false);
+    write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && !isCurrentGameTurnComplete(this.gameId));
     validate() = (prior(this).numberCards >= this.numberCards && prior(this).numberCards <= this.numberCards + 3);
 }
 
