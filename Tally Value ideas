@@ -1,0 +1,2 @@
+Idea 1: Deck stores a duplicate tally next to each cardID, keeps track of tallies and only adds/removes the highest one
+Idea 2: 
