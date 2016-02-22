@@ -4,12 +4,12 @@
 //-------------------------------------------------------------------------------
 
 path /users {
-    read() = true;
+    read() {true}
 }
 
 path /users/$userId is User {
-    write() = (doesExist(this) && prior(this).id == auth.uid && this.id == auth.uid) || (doesNotExist(this) && this.id == auth.uid);
-    validate() = this.id == $userId;
+    write() {doesExist(this) && prior(this).id == auth.uid && this.id == auth.uid) || (doesNotExist(this) && this.id == auth.uid}
+    validate() {this.id == $userId}
 }
 
 type User extends TimeStamped {
@@ -20,7 +20,7 @@ type User extends TimeStamped {
 }
 
 type Uid extends String {
-    validate() = isUid(this);
+    validate() {isUid(this)}
 }
 
 type ExistingUserId extends Uid {
@@ -47,8 +47,8 @@ function isExistingUserId(userId) {
 //-------------------------------------------------------------------------------
 
 path /roles/$userId {
-    read() = isCurrentUser($userId);
-    write() = isCurrentUserAdmin();
+    read() {isCurrentUser($userId)}
+    write() {isCurrentUserAdmin()}
 }
 
 path /roles/$userId/$roleName is Boolean {
@@ -69,8 +69,8 @@ function isUserAdmin(userId) {
 //-------------------------------------------------------------------------------
 
 path /games/$gameId is Game {
-    read() = (isCurrentUserGamePlayer(this));
-    write() = (doesExist(this) && isCurrentUserGamePlayer(this) && prior(this).players[auth.uid].userId == auth.uid ||  doesNotExist(this) && this.players[auth.uid].userId == auth.uid);
+    read() {isCurrentUserGamePlayer(this)}
+    write() {doesExist(this) && isCurrentUserGamePlayer(this) && prior(this).players[auth.uid].userId == auth.uid ||  doesNotExist(this) && this.players[auth.uid].userId == auth.uid}
 }
 
 type Game extends Entity {
@@ -91,10 +91,10 @@ function isExistingGameId(gameId) {
 //-------------------------------------------------------------------------------
 
 path /games/$gameId/players/$userId is GamePlayer {
-    read() = isCurrentUserGamePlayer($gameId);
+    read() {isCurrentUserGamePlayer($gameId)}
 }
 path /games/$gameId/players/$userId/id {
-    validate() = this == $userId;
+    validate() {this == $userId}
 }
 
 type GamePlayer extends TimeStamped {
@@ -264,12 +264,12 @@ function willCardExistInDeckIndex(newRoot, cardId, deckId) {
 //-------------------------------------------------------------------------------
 
 path /indexes/userIdToGameIds/$userId {
-    validate() = isExistingUserId($userId);
-    read() = isCurrentUser($userId);
+    validate() {isExistingUserId($userId)}
+    read() {isCurrentUser($userId)}
 }
 
 path /indexes/userIdToGameIds/$userId/$gameId is ExistingGameId {
-    write() = isCurrentUserGamePlayer($gameId) && isCurrentUser($userId);
+    write() {isCurrentUserGamePlayer($gameId) && isCurrentUser($userId)}
 }
 
 
@@ -278,13 +278,13 @@ path /indexes/userIdToGameIds/$userId/$gameId is ExistingGameId {
 //-------------------------------------------------------------------------------
 
 path /games/gameCards {
-        read() = false;
-        write() = false;
+        read() {false}
+        write() {false}
 }
 
 path /games/gameCards/$gameCardId is GameCard {
-        read() = (doesCurrentUserOwnObject(this));
-        write() = false;
+        read() {doesCurrentUserOwnObject(this)}
+        write() {false}
 }
 
 type GameCard extends Entity {
@@ -323,14 +323,14 @@ type gameDeck extends Entity {
 //-------------------------------------------------------------------------------
 
 path /games/hands {
-        read() = false;
-        write() = false;
+        read() {false}
+        write() {false}
 }
 
 path /games/hands/$hand is hand{
-        read() = (doesCurrentUserOwnObject(this));
-        write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && !isCurrentGameTurnComplete(this.gameId));
-        validate() = (prior(this).numberCards >= this.numberCards && prior(this).numberCards <= this.numberCards + 3);
+        read() {doesCurrentUserOwnObject(this)}
+        write() {willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && !isCurrentGameTurnComplete(this.gameId)}
+        validate() {prior(this).numberCards >= this.numberCards && prior(this).numberCards <= this.numberCards + 3}
 }
 
 type GameHand extends Entity {
@@ -349,7 +349,7 @@ path /games/discardPiles {
 //-------------------------------------------------------------------------------
 
 path /games/disardPiles/$discardPile is discardPile {
-        write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.userId, this.gameId) && !isCurrentGameTurnComplete(this.gameId));
+        write() {willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.userId, this.gameId) && !isCurrentGameTurnComplete(this.gameId)}
 }
 
 type DiscardPile extends Entity {
@@ -364,16 +364,16 @@ type DiscardPile extends Entity {
 //-------------------------------------------------------------------------------
 
 path /games/maps/$map is Map {
-        read() = isCurretUserGamePlayer(this.gameId);
+        read() {isCurretUserGamePlayer(this.gameId)}
 }
 
 path /games/maps/$map/tiles {
 }
 
 path /games/maps/$map/tiles/$tiles is MapTile {
-        read() = isCurretUserGamePlayer($gameId);
-        write() == (isCurrentUserGamePlayer(root.games.maps[map].gameId) && isCurrentUsersGameTurn(root.games.maps[map].gameId) && !isCurrentGameTurnComplete(root.games.maps[map].gameId));
-        validate() = (prior(this).terrain == this.terrain && prior(this).resource == resource && prior(this).resourceQuantity == this.resourceQuantity);
+        read() {isCurretUserGamePlayer($gameId)}
+        write() {isCurrentUserGamePlayer(root.games.maps[map].gameId) && isCurrentUsersGameTurn(root.games.maps[map].gameId) && !isCurrentGameTurnComplete(root.games.maps[map].gameId)}
+        validate() {prior(this).terrain == this.terrain && prior(this).resource == resource && prior(this).resourceQuantity == this.resourceQuantity}
 }
 
 type Map extends Entity {
@@ -395,7 +395,7 @@ type MapTile extends Entity {
 //-------------------------------------------------------------------------------
 
 path /states/games/$gameId/info is GameState {
-    read() = isUserGamePlayer($gameId);
+    read() {isUserGamePlayer($gameId)}
 }
 
 type GameState {
@@ -428,12 +428,12 @@ function isGameTurnComplete(gameId, turnId) {
 }
 
 path /states/games/$gameId/turns/$turnId is GameTurnState {
-    read() = isCurrentUserGamePlayer($gameId);
-    write() = !isGameTurnComplete($gameId, $turnId);
+    read() {isCurrentUserGamePlayer($gameId)}
+    write() {!isGameTurnComplete($gameId, $turnId)}
 }
 
 path /states/games/$gameId/turns/$turnId/id {
-    validate() = this == $turnId;
+    validate() {this == $turnId}
 }
 
 type GameTurnState extends Entity {
@@ -442,8 +442,8 @@ type GameTurnState extends Entity {
     complete: TurnComplete
 }
 states/games/$gameId/turns/$turnId/$TurnComplete is TurnComplete {
-    read() = isUserGamePlayer($gameId);
-    write() = isUsersGameTurn($gameId, auth.uid);
+    read() {isUserGamePlayer($gameId)}
+    write() {isUsersGameTurn($gameId, auth.uid)}
 }
 
 type TurnComplete extend Boolean {
@@ -459,9 +459,9 @@ type TurnComplete extend Boolean {
 //-------------------------------------------------------------------------------
 
 path /states/games/$gameId/drawPiles/$drawPileId is GameDrawPileState {
-    read() = doesCurrentUserOwnObject(this);
-    write() = (willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && !isCurrentGameTurnComplete(this.gameId));
-    validate() = (prior(this).numberCards >= this.numberCards && prior(this).numberCards <= this.numberCards + 3);
+    read() {doesCurrentUserOwnObject(this)}
+    write() {willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.gameId, this.userId) && !isCurrentGameTurnComplete(this.gameId)}
+    validate() {prior(this).numberCards >= this.numberCards && prior(this).numberCards <= this.numberCards + 3}
 }
 
 type GameDrawPileState {
@@ -480,11 +480,11 @@ function isCurrentDrawPileIndex(gameId, drawPileId, drawPileIndex) {
 }
 
 path /states/games/$gameId/deckCards/$drawPileId/$drawPileIndex is GameDrawPileCard  {
-   read() = isUsersDrawPile($gameId, $drawPileId, auth.uid) && isCurrentDrawPileIndex($gameId, $drawPileId, $drawPileIndex);
+   read() {isUsersDrawPile($gameId, $drawPileId, auth.uid) && isCurrentDrawPileIndex($gameId, $drawPileId, $drawPileIndex)}
 }
 
 path /states/games/$gameId/deckCards/$drawPileId/$drawPileIndex/index  {
-   validate() = this == $drawPileIndex;
+   validate() {this == $drawPileIndex}
 }
 
 type GameDrawPileCard {
