@@ -1,0 +1,91 @@
+Read Firebase Security rules
+Work on more generic models
+
+path /list/{listId} is List {
+    validate() {
+
+    }
+}
+
+
+{
+    array: {
+        myArrayId: {
+            123: {
+                firstName: 'Brian',
+                lastName: 'Neisler',
+                userName: 'bneisler',
+                id: 'myUserId'
+            },
+            234:
+        }
+    }
+}
+
+path /array/{arrayId} is Array<User> {
+
+}
+
+type Array<T> {
+    $index: ArrayIndex<T>
+}
+
+type ArrayIndex<T> extends T {
+    validate() { isNumberString($index) }
+}
+
+path /list/{listId} is List<Card> {
+
+}
+
+indexes: '0,1,2,3'
+
+type List<T> {
+    $index: ListIndex<T>
+    count: ListCount
+    maxCount: maxNum
+}
+
+type ListIndex<T> extends T {
+    validate() {isNumberString($index)}
+}
+
+type ListCount extends Number {
+    validate() {(this >= 0) && this <= this.parent().maxCount}
+}
+
+type maxNum extends Number {
+
+}
+
+type Graph<T> {
+    $nodeNum: nodeIndex<T>
+    count: nodeCount
+}
+
+//Extends gameobject?
+type NodeIndex<T> extends T {
+    xCoordinate: coordinate
+    yCoordinate: coordinate
+    validate() {isNumberString($nodeNum) && ((xCoordinate%2 == yCoordinate%2) || (xCoordinate%2 == yCoordinate%2 * -1))}
+}
+
+type coordinate extends Number {
+
+}
+
+type nodeCount extends Number {
+
+}
+
+type gameObject<T> {
+    $property: ObjectProperty<T>
+}
+
+type ObjectPropety<T> extends T {
+    validate() {isString($property)}
+}
+
+
+//$ = Wildcard
+//

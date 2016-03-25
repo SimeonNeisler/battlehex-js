@@ -1,6 +1,6 @@
-var Promise = require("bluebird");
-var babel 	= require("gulp-babel");
-var gulp 	= require("gulp");
+import Promise from 'bluebird';
+import babel from 'gulp-babel';
+import gulp from 'gulp';
 
 gulp.task("default", ["babel"]);
 
@@ -13,7 +13,7 @@ gulp.task("babel", function(){
 		"**/*.js"
 	])
 	.pipe(babel({
-      presets: ['es2015']
+      presets: ['es2015', 'stage-2']
     }))
     .pipe(gulp.dest('./dist'));
 });
@@ -29,15 +29,14 @@ gulp.task("deploy", function(){
 
 function deployFirebaseRules() {
 	return new Promise((resolve, reject) => {
-		var fork = require('child_process').fork;
-		var proc = fork("./firebase/scripts/deploy-firebase-rules", []);
+		const fork = require('child_process').fork;
+		const proc = fork("./firebase/scripts/deploy-firebase-rules", []);
 	    proc.on('close', function (code) {
 		    if (code === 0) {
 		        resolve();
-			} else {
-		        reject(new Error("An error occurred while deploying firebase rules"));    
+				} else {
+		        reject(new Error("An error occurred while deploying firebase rules"));
 		    }
 		});
 	});
 }
-

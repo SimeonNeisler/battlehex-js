@@ -1,2 +1,30 @@
 Idea 1: Deck stores a duplicate tally next to each cardID, keeps track of tallies and only adds/removes the highest one
-Idea 2: 
+  Approach 1:
+    >Game stores cardId in deck every time a card is added.
+    >Reads deck for previous card Ids and attaches new total value to new card
+    >Only cards with the highest total values can be added or removed
+    >Implement deck as a stack and have it pop cards till it reaches the appropriate
+    cardId and gets total?
+    >Have deck return index value of last stored instance of card?
+
+
+  Approach 2:
+    > Game only keeps track of number of copies owned
+    > Decks are represented by singular card ID's with amounts attached,
+    instead of multiple card Id's with indexes
+    > Number gets incremented/decremented as cards are added or removed
+
+      type DeckCard extends TimeStamped {
+        deckId: ExistingDeckId,
+        cardId: ExistingCardId,
+        indexes: List[],
+        total: Number
+    }
+
+
+    Tank: deckId, cardId, [1, 5, 23, 30], 4
+Idea 2: Decks have "allotment" values stored. Every time a card is added it subtracts 1 from it's allotment value.
+
+  Sub-option: Decks contain every card owned by the player. The player
+  increments a number value called 'active'. Ability is removed when sum of
+  actives hits > 30.

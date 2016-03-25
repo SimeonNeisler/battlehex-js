@@ -1,1 +1,1 @@
-module.exports = require('./src/battlehex');
+module.exports = require('./dist');
