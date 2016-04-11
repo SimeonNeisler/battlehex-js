@@ -349,7 +349,7 @@ path /games/discardPiles {
 // GameDiscardPiles
 //-------------------------------------------------------------------------------
 
-path /games/disardPiles/{discardPile} is discardPile {
+path /games/discardPiles/{discardPile} is discardPile {
         write() {willCurrentUserOwnObject(this) && doesCurrentUserOwnObject(this) && isUsersGameTurn(this.userId, this.gameId) && !isCurrentGameTurnComplete(this.gameId)}
 }
 
@@ -368,7 +368,7 @@ path /games/maps/{map} is Map {
         read() {isCurretUserGamePlayer(this.gameId)}
 }
 
-path /games/maps/$map/tiles {
+path /games/map/{map}/tiles {
 
 }
 
@@ -482,11 +482,11 @@ function isCurrentDrawPileIndex(gameId, drawPileId, drawPileIndex) {
    return root.states.games[gameId].drawPiles[drawPileId]. drawPileIndex == drawPileIndex;
 }
 
-path /states/games/$gameId/deckCards/$drawPileId/$drawPileIndex is GameDrawPileCard  {
+path /states/games/{gameId}/deckCards/{drawPileId}/{drawPileIndex} is GameDrawPileCard  {
    read() {isUsersDrawPile($gameId, $drawPileId, auth.uid) && isCurrentDrawPileIndex($gameId, $drawPileId, $drawPileIndex)}
 }
 
-path /states/games/$gameId/deckCards/$drawPileId/$drawPileIndex/index  {
+path /states/games/{gameId}/deckCards/{drawPileId}/{drawPileIndex}/index  {
    validate() {this == $drawPileIndex}
 }
 
