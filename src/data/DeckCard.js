@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import TimeStamped from './TimeStamped';
+import TimeStamped from './TimeStamped.js';
 
 export default class DeckCard extends TimeStamped {
 
@@ -21,26 +21,26 @@ export default class DeckCard extends TimeStamped {
 
   setDeckId(value, newDeckId) {
     _.assign(value, {
-      deckId: newDeckId;
-    })
+      deckId: newDeckId
+    });
   }
 
   setCardId(value, newCardId) {
     _.assign(value, {
-      cardId: newCardId;
-    })
+      cardId: newCardId
+    });
   }
 
   setIndex(value, newIndex) {
     _.assign(value, {
-      index: newIndex;
-    })
+      index: newIndex
+    });
   }
 
   setTotal(value, newTotal) {
     _.assign(value, {
-      total: newTotal;
-    })
+      total: newTotal
+    });
   }
 
   addNewDeckCard(value, newDeckId, newCardId, newIndex, newTotal) {

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class DiscardPile extends Entity {
 
@@ -17,26 +17,26 @@ export default class DiscardPile extends Entity {
 
   setUserId(value, newUserId) {
     _.assign(value, {
-      userId: newUserId;
-    })
+      userId: newUserId
+    });
   }
 
   setGameId(value, newGameId) {
     _.assign(value, {
-      gameId: newGameId;
-    })
+      gameId: newGameId
+    });
   }
 
   addCardToDiscardPile(value, newCard) {
     _.assign(value, {
-      contets: this.contents.add(newCard);
-    })
+      contents: this.contents.add(newCard)
+    });
   }
 
   removeCardFromDiscardPile(value, removedCard) {
     _.assign(value, {
-      contents: this.contents.remove(removedCard);
-    })
+      contents: this.contents.remove(removedCard)
+    });
   }
 
   addNewDiscardPile(value, newUserId, newGameId) {

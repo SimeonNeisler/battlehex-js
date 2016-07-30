@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class GameHand extends Entity {
 
@@ -21,26 +21,26 @@ export default class GameHand extends Entity {
 
   setUserId(value, newUserId) {
     _.assign(value, {
-      userId: newUserId;
-    })
+      userId: newUserId
+    });
   }
 
   setGameId(value, newGameId) {
     _.assign(value, {
-      gameId: newGameId;
-    })
+      gameId: newGameId
+    });
   }
 
   setNumberCards(value, newNumberCards) {
     _.assign(value, {
-      numberCards: newNumberCards;
-    })
+      numberCards: newNumberCards
+    });
   }
 
   setDrawPileIndex(value, newDrawPileIndex) {
     _.assign(value, {
-      drawPileIndex: newDrawPileIndex;
-    })
+      drawPileIndex: newDrawPileIndex
+    });
   }
 
   addNewGameDrawPileState(value, newUserId, newGameId, newNumberCards, newDrawPileIndex) {

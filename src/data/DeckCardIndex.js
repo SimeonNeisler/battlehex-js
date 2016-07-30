@@ -13,14 +13,14 @@ export default class DeckCardIndex extends Firebase {
 
   setCardId(value, newCardId) {
     _.assign(value, {
-      cardId: newCardId;
-    })
+      cardId: newCardId
+    });
   }
 
   setIndex(value, newIndex) {
     _.assign(value, {
-      index: newIndex;
-    })
+      index: newIndex
+    });
   }
 
   addNewDeckCard(value, newDeckId, newCardId, newIndex, newTotal) {

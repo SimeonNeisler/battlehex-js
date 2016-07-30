@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import TimeStamped from './Timestamped';
+import TimeStamped from './TimeStamped.js';
 
 export default class User extends TimeStamped {
 
@@ -21,26 +21,26 @@ export default class User extends TimeStamped {
 
   addId(value, newId) {
     _.assign(value, {
-      id: newId;
-    })
+      id: newId
+    });
   }
 
   addFirstName(value, newFirst) {
     _.assign(value, {
-      firstName: newFirst;
-    })
+      firstName: newFirst
+    });
   }
 
   addLastName(value, newLast) {
     _.assign(value, {
-      lastName: newLast;
-    })
+      lastName: newLast
+    });
   }
 
   addUserName(value, newUserName) {
     _.assign(value, {
-      userName: newUserName;
-    })
+      userName: newUserName
+    });
   }
 
   addUser(value, newId, newFirst, newLast, newUserName) {

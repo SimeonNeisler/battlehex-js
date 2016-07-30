@@ -13,6 +13,7 @@ export {default as GameHand} from './GameHand';
 export {default as GamePlayer} from './GamePlayer';
 export {default as GameState} from './GameState';
 export {default as GameTurnState} from './GameTurnState';
+export {default as Identity} from './Identity';
 export {default as Map} from './Map';
 export {default as MapTile} from './MapTile';
 export {default as TimeStamped} from './TimeStamped';

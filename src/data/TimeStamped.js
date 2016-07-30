@@ -28,14 +28,14 @@ export default class TimeStamped extends Firebase {
 
   addCreatedAt(value){
     _.assign(value, {
-      createdAt: Firebase.timeStamp();
-    })
+      createdAt: Firebase.timeStamp()
+    });
   }
 
   addUpdatedAt(value){
     _.asign(value, {
-      updatedAt: Firebase.timeStamp();
-    })
+      updatedAt: Firebase.timeStamp()
+    });
   }
 
   addTimeStamps(value){

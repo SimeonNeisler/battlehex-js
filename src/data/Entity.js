@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import TimeStamped from './Timestamped';
+import TimeStamped from './TimeStamped.js';
 
 export default class Entity extends TimeStamped {
 

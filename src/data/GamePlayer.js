@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import TimeStamped from './Timestamped';
+import TimeStamped from './TimeStamped.js';
 
 export default class GamePlayer extends TimeStamped {
 
@@ -9,8 +9,8 @@ export default class GamePlayer extends TimeStamped {
 
   setUserId(value, newUserId) {
     _.assign(value, {
-      userId: newUserId;
-    })
+      userId: newUserId
+    });
   }
 
   addNewGamePlayer(value, newUserId) {

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class GameDeck extends Entity {
 
@@ -25,33 +25,33 @@ export default class GameDeck extends Entity {
 
   setUserId(value, newUserId) {
     _.assign(value, {
-      userId: newUserId;
-    })
+      userId: newUserId
+    });
   }
 
   setGameId(value, newGameId) {
     _.assign(value, {
-      gameId: newGameId;
-    })
+      gameId: newGameId
+    });
   }
 
   setDeckName(value, newDeckName) {
     _.assign(value, {
-      deckName: newDeckName;
-    })
+      deckName: newDeckName
+    });
   }
 
   setDeckSize(value, newDeckSize) {
     _.assign(value, {
-      deckSize: newDeckSize;
-    })
+      deckSize: newDeckSize
+    });
   }
 
   //Needs a different method since it duplicates a User's deck
   setDeckCards(value, newRange) {
     _.assign(value, {
-      cardRange: newRange;
-    })
+      cardRange: newRange
+    });
   }
 
 
@@ -59,7 +59,7 @@ export default class GameDeck extends Entity {
     this.setId(value, newId);
     this.setUserId(value, newUserId);
     this.setGameId(value, newGameId);
-    this.setDeckName(value, newDeckName;
+    this.setDeckName(value, newDeckName);
     this.setDeckSize(value, newDeckSize);
     addTimeStamps(value);
   }

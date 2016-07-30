@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class GameturnState extends Entity {
 
@@ -17,22 +17,22 @@ export default class GameturnState extends Entity {
 
   setGameId(value, newGameId) {
     _.assign(value, {
-      gameId: newGameId;
-    })
+      gameId: newGameId
+    });
     this.addUpdatedAt(value);
   }
 
   setUserId(value, newUserId) {
     _.assign(value, {
-      userId: newUserId;
-    })
+      userId: newUserId
+    });
     this.addUpdatedAt(value);
   }
 
   setComplete(value, newTurnComplete) {
     _.assign(value, {
-      complete: newTurnComplete;
-    })
+      complete: newTurnComplete
+    });
     this.addUpdatedAt(value);
   }
 

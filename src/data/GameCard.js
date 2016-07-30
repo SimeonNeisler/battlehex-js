@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class GameCard extends Entity {
 
@@ -29,37 +29,37 @@ export default class GameCard extends Entity {
 
   setCardName(value, newName) {
     _.assign(value, {
-      cardName: newName;
-    })
+      cardName: newName
+    });
   }
 
   setCardCost(value, newCost) {
     _.assign(value, {
-      cardCost: newCost;
-    })
+      cardCost: newCost
+    });
   }
 
   setCardStrength(value, newStrength) {
     _.assign(value, {
-      cardStrength: newStrength;
-    })
+      cardStrength: newStrength
+    });
   }
 
   setCardHP(value, newHP) {
     _.assign(value, {
-      cardHP: newHP;
-    })
+      cardHP: newHP
+    });
   }
   setCardRange(value, newRange) {
     _.assign(value, {
-      cardRange: newRange;
-    })
+      cardRange: newRange
+    });
   }
 
   setCardDeployCost(value, newDeployCost) {
     _.assign(value, {
-      cardDeployCost: newDeployCost;
-    })
+      cardDeployCost: newDeployCost
+    });
   }
 
   addNewCard(value, newName, newCost, newStrength, newHP, newRange, newDeployCost) {

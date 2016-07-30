@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class Map extends Entity {
 
@@ -13,8 +13,8 @@ export default class Map extends Entity {
 
   setGameId(value, newGameId) {
     _.assign(value, {
-      gameId: newGameId;
-    })
+      gameId: newGameId
+    });
   }
 
   //Ask about procedure for populating map with tiles

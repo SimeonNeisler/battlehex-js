@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class Deck extends Entity {
 
@@ -13,14 +13,14 @@ export default class Deck extends Entity {
 
   setDeckName(value, newName) {
     _.assign(value, {
-      deckName: newName;
-    })
+      deckName: newName
+    });
   }
 
   setUserId(value, newUserId) {
     _.assign(value, {
-      userId: newUserId;
-    })
+      userId: newUserId
+    });
   }
 
   addNewDeck(value, newDeckName, newUserId) {

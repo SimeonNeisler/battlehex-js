@@ -13,13 +13,13 @@ export default class GameDrawPileCard extends Firebase {
 
   setIndex(value, newIndex) {
     _.assign(value, {
-      index: newIndex;
-    })
+      index: newIndex
+    });
   }
 
   setName(value, newName) {
     _.assign(value, {
-      name: newName;
-    })
+      name: newName
+    });
   }
 }

@@ -1,5 +1,5 @@
 import {Firebase} from '../helpers';
-import GameTurnState from './GameturnState';
+import GameTurnState from './GameTurnState.js';
 import _ from 'lodash';
 
 export default class GameState extends Firebase {
@@ -14,12 +14,13 @@ export default class GameState extends Firebase {
 
   setGameId(value, newGameId) {
     _.assign(value, {
-      gameId: newGameId;
-    })
+      gameId: newGameId
+    });
   }
 
   setCurrentGameturnId(value, newCurrentGameTurnId) {
     _.assign(value, {
-      currentGameTurnId: newCurrentGameTurnId;
-    })
+      currentGameTurnId: newCurrentGameTurnId
+    });
   }
+}

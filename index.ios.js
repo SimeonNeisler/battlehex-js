@@ -13,13 +13,27 @@ import React, {
   TextInput,
 } from 'react-native';
 
-import Auth0Lock from 'react-native-lock';
+import init from './src/init.js';
+
+const {authController} = init();
+
+{/*var initPromise = new Promise(function(resolve, reject) {
+  init();
+  if (data) {
+    authController = data.authController;
+    resolve('Data returned.');
+  }
+  else {
+    reject(console.log(err));
+  }
+});*/}
+
 
 class Battlehex extends Component {
   constructor(props) {
     super(props);
-    this.lock = new Auth0Lock({clientId: '1sSkRR588YOSj5pNPt9pHIC9M7JMTMBA', domain: 'battlehex.auth0.com'});
   }
+
 
   render() {
     return (
@@ -27,32 +41,15 @@ class Battlehex extends Component {
         <Text style={styles2.gameTitle}>
           BattleHex
         </Text>
-        <Text style={styles2.Login}>
-          Email:
-        </Text>
-        <Text/>
-        <Text style={styles2.Login}>
-          Password:
-        </Text>
-        <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-          style = {{width: 50, height: 50}} />
+
       </View>
     );
   }
 
   componentDidMount() {
-    this.lock.show({}, (err, profile, token) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log(profile);
-      console.log(token);
-      // Authentication worked!
-      console.log('Logged in with Auth0!');
-    });
-
+      authController.login();
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -85,6 +82,14 @@ const styles2 = StyleSheet.create({
       alignItems: 'flex-start',
       marginBottom: 2,
     },
+    logoutButton: {
+      justifyContent: 'flex-end',
+      alignItems: 'flex-start',
+    },
+    logoutButtonText: {
+      fontSize: 16,
+      textAlign: 'center',
+    }
 })
 
 AppRegistry.registerComponent('Battlehex', () => Battlehex);

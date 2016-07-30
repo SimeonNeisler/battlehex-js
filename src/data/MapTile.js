@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class MapTile extends Entity {
 
@@ -25,32 +25,32 @@ export default class MapTile extends Entity {
 
   setTileNum(value, newTileNum) {
     _.assign(value, {
-      tileNum: newTileNum;
-    })
+      tileNum: newTileNum
+    });
   }
 
   setTerrain(value, newTerrain) {
     _.assign(value, {
-      terrain: newTerrain;
-    })
+      terrain: newTerrain
+    });
   }
 
   setResource(value, newResource) {
     _.assign(value, {
-      resource: newResource;
-    })
+      resource: newResource
+    });
   }
 
   setResourceQuantity(value, newResourceQuantity) {
     _.assign(value, {
-      resourceQuantity: newResourceQuantity;
-    })
+      resourceQuantity: newResourceQuantity
+    });
   }
 
   setBoardUnit(value, newBoardUnit) {
     _.assign(value, {
-      boardUnit: newBoardUnit;
-    })
+      boardUnit: newBoardUnit
+    });
     this.addUpdatedAt(value);
   }
 

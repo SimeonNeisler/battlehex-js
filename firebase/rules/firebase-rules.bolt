@@ -41,6 +41,33 @@ function isExistingUserId(userId) {
     return root.users[userId] != null;
 }
 
+//-------------------------------------------------------------------------------
+// Identities
+//-------------------------------------------------------------------------------
+
+path /objects/identities {
+
+}
+
+path /objects/identities/{identityId} is Identity {
+  read() {}
+}
+
+type Identity extends TimeStamped {
+  provider: String,
+  providerUserId: String,
+  accessToken: String,
+  userId: Uid,
+  id: identityId
+}
+
+type identityId extends String {
+  validate() {isIdentityId(this)}
+}
+
+function isIdentityId(value) {
+    return value.test(/^(facebook|twitter|google)\|[0-9]+$/);
+}
 
 //-------------------------------------------------------------------------------
 // Roles

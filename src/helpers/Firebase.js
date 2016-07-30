@@ -1,15 +1,16 @@
 import firebase from 'firebase';
-import config from 'config';
+import config from '../../config/default.json';
 import fireproof from 'fireproof';
 import _ from 'lodash';
-
+console.log(config);
 export default class Firebase {
+
   constructor (ref, rawData) {
     this._ref = null;
     this._path = null;
     this.bound = false;
-    if (ref instanceof firebase) {
-      this._ref = ref;
+    if (ref.match(/https:\/\/battlehex\.firebaseio\.com*/)) {
+      this._ref = new firebase(ref);
       this.bound = true;
       this.doBind();
     } else {
@@ -49,6 +50,14 @@ export default class Firebase {
     return await this._ref.authWithPassword(credentials, onComplete, options);
   }
 
+  child(path) {
+    return this._ref.child(path);
+  }
+
+  equalTo(value) {
+    return this._ref.equalTo(value);
+  }
+
   getAuth() {
     return this._ref.getAuth();
   }
@@ -59,6 +68,10 @@ export default class Firebase {
 
   offAuth(onComplete, context) {
     return this._ref.offAuth(onComplete, context);
+  }
+
+  orderByChild(value) {
+    return this._ref.orderByChild(value);
   }
 
   unauth() {
@@ -153,10 +166,10 @@ export default class Firebase {
         .split('/');
     }
 
-    parts = _.map(parts, (part) => {Firebase.escapePathPart(part)})
+    parts = _.map(parts, (part) => {Firebase.escapePathPart(part)});
 
     newURL = value.join('/');
-    if newURL.indexOf(firebaseURL == -1) {
+    if (newURL.indexOf(firebaseURL == -1)) {
       newURL = firebaseURL + newURL;
     }
     return newURL;

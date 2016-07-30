@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity';
+import Entity from './Entity.js';
 
 export default class Game extends Entity {
 
@@ -9,8 +9,8 @@ export default class Game extends Entity {
 
   setName(value, newName) {
     _.assign(value, {
-      name: newName;
-    })
+      name: newName
+    });
   }
 
 
