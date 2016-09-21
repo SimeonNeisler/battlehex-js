@@ -40,40 +40,70 @@ export default class AuthController {
     newIdentity = this.identityManager.generateIdentity(newId, newUserId, newProvider, newProviderUserId, newAccessToken);
     ref.child("identities").push(newIdentity);
   }
-
+  debugger;
   login() {
     var ref = new Firebase('https://battlehex.firebaseio.com');
     this.lock.show({}, (err, profile, token) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    provider = profile.identities[0].provider;
-    providerUserId = profile.identities[0].userId;
-    id = profile.userId;
-    accessToken = token.accessToken;
-    auth = ref.getAuth();
-    /*if (auth == null) {
-      ref.createUser({
-        provider:
-      }, null);
-    }*/
-    console.log(auth);
-    // Authentication worked!
-    console.log('Logged in with Auth0!');
-    console.log(profile);
-    console.log(token);
-    var identityQueryResult;
-    var identityQuery = ref
-      .child("Identities")
-      .orderByChild("id")
-      .equalTo(id)
-      .on("child_added", function(snapshot) {
-        console.log(snapshot.key());
-        identityQueryResult = snapshot.key();
-      });
+      if (err) {
+        console.log(err);
+        return;
+      }
+      provider = profile.identities[0].provider;
+      providerUserId = profile.identities[0].userId;
+      id = profile.userId;
+      accessToken = token.accessToken;
+      auth = ref.getAuth();
+      /*if (auth == null) {
+        ref.createUser({
+          provider:
+        }, null);
+      }*/
+      //console.log(auth);
+      // Authentication worked!
+      console.log('Logged in with Auth0!');
+      console.log(profile);
+      console.log(token);
+      var identityQueryResult;
+      var identityQuery = ref
+        .child("objects")
+        .child("identities")
+        .orderByChild("id")
+        .equalTo(id)
+        .once('value', function(dataSnapshot) {
+          console.log("identity Query");
+          console.log(snapshot.key());
+          identityQueryResult = snapshot.key();
+          console.log("Printing Identity Query");
+          console.log(identityQueryResult);
+        }, function(err) {
+            debugger;
+            console.log("No data read.");
+              if (!identityQueryResult) {
+                var newIdentity = this.identityManager.generateIdentity(id, null, provider, providerUserId, accessToken);
+                ref.child("Identities").push(newIdentity);
+              }
+        });
+    /*
+    Identities table: (Stores user ID, ) New identities can be created by anyone, identities can only be read or writen by user that owns them
+    Users table:
+    MapIdentityID>UserID table: IdentityID:UserID key value table
+    Auth0Token > Delegate method > Query DB with new DelegationToken
+    AuthWithCustomToken to authenticate with DB
+    .post(`https://${Config.get('auth0Endpoint')}/delegation', {
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      scope: 'openid',
+      api_type: 'firebase',
+      id_token: idToken,
+      client_id: Config.get('auth0ClientId')
+    }).then(res => res.body);
+  }
 
-    console.log("Printing Identity Query");
+    */
+
+
+    //--------------------------------------------------
+
+    /*console.log("Printing Identity Query");
     console.log(identityQueryResult);
     if (!identityQueryResult) {
       debugger;
@@ -89,7 +119,7 @@ export default class AuthController {
           userId: auth.uid
         });
       }
-    }
+    }*/
     });
   }
 }

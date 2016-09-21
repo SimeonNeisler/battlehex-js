@@ -10,8 +10,9 @@ export default class EntityManager {
   }
 
   generatePath (pathData) {
-    //Implement better error library later.
-    throw new Error("EntityManager.generatePath required to be implemented.");
+    path = pathData;
+    return path;
+    //throw new Error("EntityManager.generatePath required to be implemented.");
   }
 
   async get (pathData) {

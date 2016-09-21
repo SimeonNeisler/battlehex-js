@@ -1,34 +1,3 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-
-pids
-logs
-results
-
-# node js
-node_modules
-npm-debug.log
-
-# gulp recipes
-gulp-recipes
-
-# IntelliJ resources
-*.iml
-*.ipr
-*.iws
-
-#mac
-.DS_Store
-
-# development
-dist
-
 # OSX
 #
 .DS_Store
@@ -55,6 +24,18 @@ project.xcworkspace
 
 # Android/IJ
 #
+*.iml
 .idea
 .gradle
 local.properties
+
+# node.js
+#
+node_modules/
+npm-debug.log
+
+# BUCK
+buck-out/
+\.buckd/
+android/app/libs
+android/keystores/debug.keystore

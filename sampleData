@@ -1,0 +1,17 @@
+gamemaps {
+    -abc123: {
+        id: abc123,
+        gameId: game1,
+        tiles: {{
+          coordinates {3, 5},
+          resource: oil,
+          terrain: Desert,
+          resourceQuantity: 2,
+          unit: {
+            player: {
+
+            }
+          }
+        }}
+    }
+}

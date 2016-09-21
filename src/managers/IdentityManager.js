@@ -10,7 +10,15 @@ export default class IdentityManager extends EntityManager {
   generatePath(pathData) {
     return ['identities', pathData.identityId];
   }
-  generateIdentity(newId, newUserId, newProvider, newProviderUserId, newAccessToken) {
-    this.entityClass.addNewIdentity(newId, newUserId, newProvider, newProviderUserId, newAccessToken);
-  }
+/*  generateIdentity(pathData, newId, newUserId, newProvider, newProviderUserId, newAccessToken) {
+    generatePath(pathData);
+    identityData = {id: newId,
+                    userid: newUserId,
+                    provider: newProvider,
+                    providerUserId: newProviderUserId,
+                    accessToken: newAccessToken};
+    super.generateEntity(pathData, identityData);
+    //newIdentity = Identity.addNewIdentity(newId, newUserId, newProvider, newProviderUserId, newAccessToken);
+    //return newIdentity;
+  }*/
 }

@@ -2,7 +2,6 @@ import firebase from 'firebase';
 import config from '../../config/default.json';
 import fireproof from 'fireproof';
 import _ from 'lodash';
-console.log(config);
 export default class Firebase {
 
   constructor (ref, rawData) {

@@ -1,0 +1,10 @@
+{
+  "objects": {
+    "identities": {
+      "identity1": {
+        "identityId": "identityId1",
+        "userName": "SimeonNeisler"
+      }
+    }
+  }
+}

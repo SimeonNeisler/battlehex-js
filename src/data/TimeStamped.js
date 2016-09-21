@@ -3,6 +3,11 @@ import _ from 'lodash';
 
 export default class TimeStamped extends Firebase {
 
+  constructor() {
+    super();
+    this.addTimeStamps(this);
+  }
+
   getUpdatedAt(){
     return _.get(this.rawData, 'updatedAt');
   }
@@ -33,7 +38,7 @@ export default class TimeStamped extends Firebase {
   }
 
   addUpdatedAt(value){
-    _.asign(value, {
+    _.assign(value, {
       updatedAt: Firebase.timeStamp()
     });
   }

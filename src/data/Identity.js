@@ -3,6 +3,12 @@ import TimeStamped from './TimeStamped.js';
 
 export default class Identity extends TimeStamped {
 
+  constructor(pathData, rawData) {
+    super();
+    this.pathData = pathData;
+    this.rawData = rawData;
+  }
+
   getId() {
     return _.get(this.rawData, 'id');
   }
@@ -53,12 +59,12 @@ export default class Identity extends TimeStamped {
     });
   }
 
-  addNewIdentity(newId, newUserId, newProvider, newProviderUserId, newAccessToken) {
+  /*addNewIdentity(newId, newUserId, newProvider, newProviderUserId, newAccessToken) {
     this.addId(value, newId);
     this.addUserId(value, newUserId);
     this.addProvider(value, newProvider);
     this.addProviderUserId(value, newProviderUserId);
     this.addAccessToken(value, newAccessToken);
     addTimeStamps(value);
-    }
+  }*/
 }

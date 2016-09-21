@@ -4,8 +4,11 @@
  */
 
 import React, {
-  AppRegistry,
   Component,
+} from 'react';
+
+import {
+  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -17,7 +20,7 @@ import init from './src/init.js';
 
 const {authController} = init();
 
-{/*var initPromise = new Promise(function(resolve, reject) {
+/*var initPromise = new Promise(function(resolve, reject) {
   init();
   if (data) {
     authController = data.authController;
@@ -26,31 +29,28 @@ const {authController} = init();
   else {
     reject(console.log(err));
   }
-});*/}
+});*/
 
 
 class Battlehex extends Component {
   constructor(props) {
     super(props);
   }
-
-
   render() {
-    return (
+    return(
       <View style={styles.container}>
         <Text style={styles2.gameTitle}>
           BattleHex
         </Text>
-
       </View>
     );
   }
-
+debugger;
   componentDidMount() {
       authController.login();
   }
-
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-  },
+  }
 });
 
 const styles2 = StyleSheet.create({
@@ -90,6 +90,6 @@ const styles2 = StyleSheet.create({
       fontSize: 16,
       textAlign: 'center',
     }
-})
+});
 
-AppRegistry.registerComponent('Battlehex', () => Battlehex);
+AppRegistry.registerComponent('battlehex', () => Battlehex);
