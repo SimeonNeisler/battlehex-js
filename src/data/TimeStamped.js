@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 export default class TimeStamped extends Firebase {
 
-  constructor() {
-    super();
+  constructor(pathData, rawData) {
+    super(pathData, rawData);
     this.addTimeStamps(this);
   }
 

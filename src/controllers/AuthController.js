@@ -35,12 +35,11 @@ export default class AuthController {
     client_id: [your auth0 client id]
   }*/
 
-  identityGeneration(newId, newUserId, newProvider, newProviderUserId, newAccessToken) {
+  /*identityGeneration(newId, newUserId, newProvider, newProviderUserId, newAccessToken) {
     var ref = new Firebase("https://battlehex.firebaseio.com");
     newIdentity = this.identityManager.generateIdentity(newId, newUserId, newProvider, newProviderUserId, newAccessToken);
     ref.child("identities").push(newIdentity);
-  }
-  debugger;
+  }*/
   login() {
     var ref = new Firebase('https://battlehex.firebaseio.com');
     this.lock.show({}, (err, profile, token) => {
@@ -48,6 +47,7 @@ export default class AuthController {
         console.log(err);
         return;
       }
+      console.log(ref);
       provider = profile.identities[0].provider;
       providerUserId = profile.identities[0].userId;
       id = profile.userId;
@@ -63,24 +63,28 @@ export default class AuthController {
       console.log('Logged in with Auth0!');
       console.log(profile);
       console.log(token);
+      identityManager = this.identityManager;
       var identityQueryResult;
       var identityQuery = ref
         .child("objects")
         .child("identities")
         .orderByChild("id")
         .equalTo(id)
-        .once('value', function(dataSnapshot) {
-          console.log("identity Query");
-          console.log(snapshot.key());
-          identityQueryResult = snapshot.key();
-          console.log("Printing Identity Query");
+        .once('value', function(snapshot) {
+          identityQueryResult = snapshot.val();
           console.log(identityQueryResult);
+          var newIdentityPath = ("http://battlehex.firebaseio.com/objects/identities/" + id);
+          if (identityQueryResult == null) {
+            debugger;
+            var newIdentity = identityManager.generateIdentity(newIdentityPath, id, null, provider, providerUserId, accessToken);
+            newIdentity.getAll();
+          }
         }, function(err) {
             debugger;
             console.log("No data read.");
               if (!identityQueryResult) {
-                var newIdentity = this.identityManager.generateIdentity(id, null, provider, providerUserId, accessToken);
-                ref.child("Identities").push(newIdentity);
+                //var newIdentity = this.identityManager.generateIdentity(id, null, provider, providerUserId, accessToken);
+                //ref.child("Identities").push(newIdentity);
               }
         });
     /*

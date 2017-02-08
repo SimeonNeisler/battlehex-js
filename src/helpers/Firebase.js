@@ -8,12 +8,14 @@ export default class Firebase {
     this._ref = null;
     this._path = null;
     this.bound = false;
-    if (ref.match(/https:\/\/battlehex\.firebaseio\.com*/)) {
+    if (ref.match(/https:\/\/battlehex\.firebaseio\.com.*/)) {
+      console.log("True");
       this._ref = new firebase(ref);
       this.bound = true;
       this.doBind();
     } else {
-        this._path = ref;
+      console.log("False");
+      this._path = ref;
     }
     this.rawData = rawData;
   }

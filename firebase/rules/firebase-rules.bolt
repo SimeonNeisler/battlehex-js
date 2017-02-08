@@ -47,11 +47,14 @@ function isExistingUserId(userId) {
 //-------------------------------------------------------------------------------
 
 path /objects/identities {
-
+  read() {true}
+  write() {doesNotExist(this)}
 }
 
 path /objects/identities/{identityId} is Identity {
   read() {doesCurrentUserOwnIdentity(this)}
+  write() {doesCurrentUserOwnIdentity(this)}
+
 }
 
 type Identity extends TimeStamped {

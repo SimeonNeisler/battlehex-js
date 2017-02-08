@@ -2,7 +2,6 @@ import {IdentityManager, UserManager} from './managers';
 import AuthController from './controllers/AuthController.js'
 
 let data;
-debugger;
 export default function init() {
   if (!data) {
     const identityManager = new IdentityManager();

@@ -5,8 +5,8 @@ export default class EntityManager {
   }
 
   generateEntity (pathData, rawData) {
-    const path = this.generatePath(pathData);
-    return new this.entityClass(path, rawData);
+    //const path = this.generatePath(pathData);
+    return new this.entityClass(pathData, rawData);
   }
 
   generatePath (pathData) {
