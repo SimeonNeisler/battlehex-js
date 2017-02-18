@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Entity from './Entity.js';
+import Entity from 'Entity';
 
 export default class GameHand extends Entity {
 

@@ -17,4 +17,5 @@ export {default as Identity} from './Identity';
 export {default as Map} from './Map';
 export {default as MapTile} from './MapTile';
 export {default as TimeStamped} from './TimeStamped';
+export {default as Unit} from './Unit';
 export {default as User} from './User';

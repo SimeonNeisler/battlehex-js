@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Entity from './Entity.js';
 
-export default class BoardUnit extends Entity {
+export default class Unit extends Entity {
   contructor(name, player, health, maxHealth, damage, moves, range, attackDirections) {
     this.name = name;
     this.player = player;

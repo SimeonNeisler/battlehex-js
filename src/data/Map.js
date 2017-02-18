@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Entity from './Entity.js';
+import MapTile from './MapTile.js';
 
 export default class Map extends Entity {
 
@@ -11,11 +12,17 @@ export default class Map extends Entity {
     return _.get(this.rawData, 'tiles');
   }
 
+  getMapTileById(MapTileId) {
+    MapTiles = this.getTiles();
+    return MapTiles.get(MapTileId);
+  }
+
   setGameId(value, newGameId) {
     _.assign(value, {
       gameId: newGameId
     });
   }
+
 
   //Ask about procedure for populating map with tiles
 

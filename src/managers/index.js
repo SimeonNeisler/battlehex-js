@@ -16,4 +16,5 @@ export {default as GameTurnStateManager} from './GameTurnStateManager';
 export {default as IdentityManager} from './IdentityManager';
 export {default as MapManager} from './MapManager';
 export {default as MapTileManager} from './MapTileManager';
+export {default as UnitManager} from './UnitManager';
 export {default as UserManager} from './UserManager';
